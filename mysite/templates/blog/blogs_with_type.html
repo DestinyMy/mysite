@@ -5,6 +5,8 @@
     {{ blog_type }}
 {% endblock %}
 
+{% block blog_active_class %}active{% endblock %}
+
 {# 界面的内容 #}
 {% block content %}
     <h3>博文类型：{{ blog_type.type_name }}</h3>
