@@ -1,0 +1,26 @@
+ul.blog_list_type {
+    list-style-type: none;
+}
+ul.blog_list_type li {
+    margin-bottom: 0.5em;
+}
+div.blog:not(:last-child) {
+    margin-bottom: 2em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #eee;
+}
+div.blog h3 {
+    margin-top: 0.5em;
+}
+ul.blog_detail_info {
+    list-style-type: none;
+    margin-top: 1.2em;
+    margin-bottom: 1em;
+}
+ul.blog_detail_info li {
+    display: inline-block;
+    margin-right: 1.5em;
+}
+p.blog_detail_content {
+    text-indent: 2em;
+}
