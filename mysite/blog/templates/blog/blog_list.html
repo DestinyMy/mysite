@@ -19,7 +19,7 @@
             <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9">
                 {# 显示博文列表 #}
                 <div class="panel panel-default">
-                    <div class="panel-heading">{% block blog_list_title %}博文列表({{ page_of_blogs.paginator.count }}篇){% endblock %}</div>
+                    <div class="panel-heading">{% block blog_list_title %}博文列表{% endblock %}</div>
                     <div class="panel-body">
                         {% for blog in page_of_blogs.object_list %}
                             <div class="blog">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 {# 显示博文页码 #}
-                <div>
+                <div class="blog_page">
                     <ul class="pagination">
                         {# 显示上一页 #}
                         <li>
@@ -51,13 +51,16 @@
                             {% endif %}
                         </li>
                         {# 显示页面数字 #}
-                        {% for page_num in page_of_blogs.paginator.page_range %}
+                        {% for page_num in page_range %}
                             {% if page_of_blogs.number == page_num %}
-                                <li class="active">
+                                <li class="active"><span>{{ page_num }}</span></li>
                             {% else %}
-                                <li>
+                                {% if page_num == "..." %}
+                                    <li><span>{{ page_num }}</span></li>
+                                {% else %}
+                                    <li><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                                {% endif %}
                             {% endif %}
-                            <a href="?page={{ page_num }}">{{ page_num }}</a></li>
                         {% endfor %}
                         {# 显示下一页 #}
                         <li>
@@ -70,6 +73,11 @@
                             {% endif %}
                         </li>
                     </ul>
+                    <p>
+                        共{{ page_of_blogs.paginator.count }}篇博客
+                        当前位于{{ page_of_blogs.number }}页
+                        共{{ page_of_blogs.paginator.num_pages }}页
+                    </p>
                 </div>   
             </div>
             {# 显示博文类型列表 #}

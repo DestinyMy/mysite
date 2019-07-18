@@ -12,6 +12,9 @@ div.blog:not(:last-child) {
 div.blog h3 {
     margin-top: 0.5em;
 }
+div.blog_page {
+    text-align: center;
+}
 ul.blog_detail_info {
     list-style-type: none;
     margin-top: 1.2em;
