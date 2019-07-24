@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import BlogType, Blog
+from .models import Blog, BlogType
 
 @admin.register(BlogType)
 class BlogTypeAdmin(admin.ModelAdmin):
@@ -7,4 +7,4 @@ class BlogTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'blog_type', 'author', 'create_time', 'last_update_time')
+    list_display = ('id', 'title', 'blog_type', 'author', 'create_time', 'last_update_time')
