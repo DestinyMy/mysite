@@ -20,7 +20,7 @@
                     <li>分类：<a href="{% url 'blogs_with_type' blog.blog_type.pk %}">{{ blog.blog_type }}</a></li>
                     <li>发表时间：{{ blog.create_time|date:"Y-m-d" }}</li>
                 </ul>
-                <p class="blog_detail_content">{{ blog.content }}</p>
+                <p class="blog_detail_content">{{ blog.content|safe }}</p>
                 <div>
                     <p>
                         {# 使用按钮响应：<a class="btn btn-default" href="#" role="button">Link</a> #}

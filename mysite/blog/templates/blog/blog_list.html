@@ -30,7 +30,7 @@
                                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                                     {{ blog.create_time|date:"Y-m-d" }}
                                 </p>
-                                <p>{{ blog.content|truncatechars:120 }}</p> <!--博文最长只显示120个字符-->
+                                <p>{{ blog.content|striptags|truncatechars:120 }}</p> <!--博文最长只显示120个字符-->
                             </div>
                         {% empty %} <!-- 没有博文时的显示状态 -->
                             <p>-- 暂无博文，敬请期待 --</p>
