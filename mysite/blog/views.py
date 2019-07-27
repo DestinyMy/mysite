@@ -3,8 +3,7 @@ from django.core.paginator import Paginator
 from django.conf import settings
 from django.db.models import Count
 from .models import Blog, BlogType
-
-EACH_PAGE_BLOG_NUM = 2 #每一页的博客数量(第一种设置博客数方式)
+from read_statistics.utils import read_once
 
 def common_code(request, blog_all_list):
     paginator = Paginator(blog_all_list, settings.EACH_PAGE_BLOG_NUM) #第二种设置博客数的方式
@@ -73,9 +72,12 @@ def blogs_with_date(request, year, month):
     return render_to_response('blog/blogs_with_date.html', context)
 
 def blog_detail(request, blog_pk):
-    context = {}
     blog = get_object_or_404(Blog, pk=blog_pk)
+    read_cookie_key = read_once(request, blog)
+    context = {}
     context['blog'] = blog
     context['previous_blog'] = Blog.objects.filter(create_time__lt=blog.create_time).first()
     context['next_blog'] = Blog.objects.filter(create_time__gt=blog.create_time).last()
-    return render_to_response('blog/blog_detail.html', context)
+    response = render_to_response('blog/blog_detail.html', context) #响应
+    response.set_cookie(read_cookie_key, "true") #阅读的cookie标记
+    return response
