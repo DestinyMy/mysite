@@ -4,6 +4,7 @@ from django.utils import timezone
 from django.db.models import Sum
 from django.contrib.contenttypes.models import ContentType
 
+# 对阅读进行计数
 def read_once(request, obj):
     ct = ContentType.objects.get_for_model(obj)
     key = "%s_%s_read" % (ct.model, obj.pk)
@@ -21,6 +22,7 @@ def read_once(request, obj):
         readdetail.save()
     return key
 
+# 得到前七天的阅读数
 def get_sevendays_read_data(content_type):
     today = timezone.now().date()
     dates = []
@@ -32,3 +34,15 @@ def get_sevendays_read_data(content_type):
         result = read_details.aggregate(read_num_sum=Sum('read_num'))
         read_nums.append(result['read_num_sum'] or 0)
     return dates, read_nums
+
+# 得到今天的热门阅读
+def get_todayhot_read_date(content_type):
+    today = timezone.now().date()
+    read_details = ReadDetail.objects.filter(content_type=content_type, date=today).order_by('-read_num')
+    return read_details[:7]
+
+# 得到昨天的热门阅读
+def get_yesterdayhot_read_date(content_type):
+    yesterday = timezone.now().date() - datetime.timedelta(days=1)
+    read_details = ReadDetail.objects.filter(content_type=content_type, date=yesterday).order_by('-read_num')
+    return read_details[:7]
