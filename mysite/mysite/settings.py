@@ -25,7 +25,7 @@ SECRET_KEY = '-^iib-4bxttwc86gql5c=5dz-g5+ere&&$^7$&lw9bo_c*c9ih'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['destinymy.pythonanywhere.com', '127.0.0.1']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'blog',
     'read_statistics',
+    'comment',
 ]
 
 MIDDLEWARE = [
@@ -124,8 +125,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_collect')
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 # media

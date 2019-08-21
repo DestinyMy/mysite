@@ -1,8 +1,10 @@
 import datetime
 from django.utils import timezone
 from django.db.models import Sum
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, redirect
 from django.core.cache import cache
+from django.contrib import auth
+from django.urls import reverse
 from read_statistics.utils import get_sevendays_read_data, get_todayhot_read_date, get_yesterdayhot_read_date
 from blog.models import Blog
 from django.contrib.contenttypes.models import ContentType
@@ -32,4 +34,15 @@ def home(request):
     context['today_hot_read'] = get_todayhot_read_date(blog_content_type)
     context['yesterday_hot_read'] = get_yesterdayhot_read_date(blog_content_type)
     context['sevenday_hot_read'] = sevenday_hot_read
-    return render_to_response('home.html', context)
+    return render(request, 'home.html', context)
+
+def login(request):
+    username = request.POST.get('username', '')
+    password = request.POST.get('password', '')
+    user = auth.authenticate(request, username=username, password=password)
+    referer = request.META.get('HTTP_REFERER', reverse('home'))
+    if user is not None:
+        auth.login(request, user)
+        return redirect(referer)
+    else:
+        return render(request, 'error.html', {'message':'用户名不存在或者用户名与密码不匹配'})
